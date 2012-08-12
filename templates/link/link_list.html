@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n multimedia_extras %}
+
+{% block main-content %}
+
+{% regroup object_list by category as category_list %} 
+
+{% for category in category_list %}
+<h2>{{ category.grouper }}</h2>
+{% for item in category.list %}
+<a href="{{ item.url }}"> 
+  <div class="container">
+    <div class="span1">
+      {% if item.image %}
+      <img class="small-sticker" src="{% thumbnail item.image 60 60 %}" />
+      {% else %}
+      <img src="{{ MEDIA_URL }}static/img/default_profile.jpg" width="60"  class="small-sticker"/>
+      {% endif %}
+    </div>
+    <div class="span7">
+      <b>{{ item.title }}</b> {% if item.text %} {% autoescape off %}{{ item.text }}{% endautoescape %}{% endif %}
+    </div>
+  </div>
+</a>
+<hr />
+{% endfor %}
+{% endfor %}
+
+{% endblock %}

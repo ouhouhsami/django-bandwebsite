@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load comments multimedia_extras i18n %}
+
+{% block main-content %}
+<div class="container">
+	<div class="span1">
+		&nbsp
+	</div>
+	<div class="span7">
+		<ul class="thumbnails">
+			<li>
+				<div class="thumbnail" style="text-align:center">
+					{% if artist.image %}<img alt="{{ artist.name }}" title="{{ artist.name }}" class="sticker" src="{% thumbnail artist.image 80 80 %}" />{% else %}<img src="{{ MEDIA_URL }}static/img/default_profile.jpg" width="80" alt="{{ artist.name }}" title="{{ artist.name }}" class="sticker"  />{% endif %}
+					<div class="caption"><h6>{{ artist.name }}</h6>
+					</div>
+				</div>
+
+			</li>
+		</ul>
+	</div>
+</div>
+{% for post in artist.posts.all|dictsortreversed:"date" %}
+{% include 'blog/post.html' %}
+{% endfor %}
+</div>
+{% endblock %}

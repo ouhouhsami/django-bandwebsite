@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n multimedia_extras %}
+
+{% block main-content %}
+{% for slideshow in object_list %}
+
+<a href="{{ slideshow.id }}">
+	<div class="container">
+		<div class="span1">
+			{% if slideshow.image_set.all %}
+			<img src="{% thumbnail slideshow.image_set.all.0.image 80 80 %}" class="small-sticker" />
+			{% else %}
+			<img src="{{ MEDIA_URL }}static/img/default_profile.jpg" width="80"  class="small-sticker"/>
+			{% endif %}
+		</div>
+		<div class="span7">
+			<b>{{ slideshow.title }}</b>
+			{% if slideshow.text %}
+			{% autoescape off %}
+			{{ slideshow.text|truncatewords_html:13 }}
+			{% endautoescape %}
+			{% endif %}
+		</div>
+	</div>
+</a>
+<hr />
+
+{% endfor %}
+{% endblock %}

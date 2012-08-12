@@ -1,0 +1,27 @@
+{% load comments %}
+{% load i18n multimedia_extras %}
+
+<div class="container">
+  <div class="span1">
+    <h2>&nbsp;</h2>
+    <span class="badge badge-inverse">{{ post.date|date:"d b Y" }}</span>
+</div>
+<div class="span7">
+    <h2><a href="{% url blog-detail post.id %}">{{ post.title }}</a></h2>
+    <p><span class="label">{{ post.category }}</span></p>
+    {% if post.image %}
+    <img src="{% thumbnail post.image 200 160 %}" style="float:left;margin-right:10px;margin-bottom:10px;"/>
+    {% endif %}
+    {% if truncate == "True" %}
+    {% autoescape off %}
+    {{ post.text|truncatewords_html:100 }}
+    {% endautoescape %}
+    <p class="read_more"><a href="{% url blog-detail post.id %}">lire la suite</a></p>
+    {% else %}
+    {% autoescape off %}
+    {{ post.text }}
+    {% endautoescape %}
+    {% endif %}
+</div>
+</div>
+<hr />

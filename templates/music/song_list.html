@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block main_content %}
+{% regroup object_list|dictsort:"track_number" by album as album_list %}<h3>albums</h3>{% for album in album_list %}   <div class="bloc">
+    <h3>{{ album.grouper }}</h3>  
+    {% autoescape off %}{{ album.grouper.text }}{% endautoescape %}
+    <img src="{{ album.grouper.get_cover_url }}" width="150" style="float:left;"/>    <table>        {% for item in album.list %}        <tr>
+        <td>{{ item.track_number }} <a href="{{ item.id }}">{{ item.title }}</a></td>
+        <td>
+        <embed 		src="{{MEDIA_URL}}swf/mediaplayer.swf" 		width="200" 		height="20"		allowscriptaccess="always" 		allowfullscreen="true" 		flashvars="width=200&height=20&file={{ item.soundfile }}" 		/></td>
+        </tr>        {% endfor %}    </table>
+   </div>{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load multimedia_extras %}
+
+{% block main-content %}	
+
+{% include "blog/post.html" with post=object %}
+
+{% if object.artist_set.all %}
+<div class="container">
+	<div class="span1">&nbsp;</div>
+	<div class="span7">
+		<ul class="thumbnails">
+			{% for artist in object.artist_set.all %}
+			<li class="span1">
+				<a class="thumbnail" href="{% url artist-posts artist.id %}"> 
+					{% if artist.image %}
+					<img alt="{{ artist.name }}" title="{{ artist.name }}" class="small-sticker" src="{% thumbnail artist.image 80 80 %}" />
+					{% else %}
+					<img src="{{ MEDIA_URL }}static/img/default_profile.jpg" width="80" alt="{{ artist.name }}" title="{{ artist.name }}" class="small-sticker"  />{% endif %}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endif %}
+
+{% endblock %}

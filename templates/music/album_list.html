@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load multimedia_extras %}
+
+{% block main-content %}
+{% regroup albums by album_category as category_list %}
+
+{% for album_category in category_list %}
+
+<h2>{{ album_category.grouper }}</h2>
+<ul class='thumbnails'>
+	{% for album in album_category.list %}
+	<li class="span3">
+		<a class="thumbnail" href="{% url album-detail album.id %}">
+			<img src="{% thumbnail album.cover 250 250 %}" class="small-sticker"/>
+			<div class="caption">
+				<h6>{{ album.title }}</h6>
+				<p><span class="badge badge-inverse">{{album.date|date:"Y" }}</span> {{ album.song_set.all|length }} {% trans 'titres' %}</p>
+			</div>
+		</a> 
+		{% endfor %}
+	</li>
+</ul>
+
+{% endfor %}
+
+{% endblock %}

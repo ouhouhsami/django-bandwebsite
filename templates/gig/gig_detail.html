@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block main_content %}	
+	<h1>Concert</h1>
+	<h2>{{ gig.hall }}</h2>
+	<h3>le {{ gig.date_time|date:"l d F Y" }} a {{ gig.date_time|date:"G:i " }} </h3>
+	<h3> {{ gig.place }}, {{ gig.city }} ({{ gig.country }})</h3>
+	<p>{{ gig.description }}</p>
+{% endblock %}

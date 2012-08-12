@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block rss %}
+<link rel="alternate" type="application/rss+xml" href="http://www.sam-lesite.fr/feeds/concerts/" title="sam - flux rss des concerts" />
+{% endblock %}
+
+{% block main-content %}
+
+
+{% if object_list %}
+
+<h2>{% trans 'Dates à venir' %}</h2>
+<br />
+{% for gig in object_list %}
+<div class="container">
+	<div class="span1">
+		<span class="badge badge-inverse">{{ gig.date_time|date:"d b Y" }}</span> 
+	</div>
+	<div class="span7">
+		<h4>{{ gig.hall }}</h4>
+		<p><i>{{ gig.place }}, {{ gig.city }} ({{ gig.country }})</i>
+			<br />
+			{% autoescape off %}
+			{{ gig.text }}
+			{% endautoescape %}
+			{% ifnotequal gig.price '0' %}{{ gig.price }} euros{% else %}entrée libre{% endifnotequal %}
+		</p>
+	</div>
+</div>
+<hr />
+{% endfor %}
+
+{% endif %}
+
+{% if prev_gigs %}
+<h2>{% trans 'Dates passées' %}</h2>
+
+{% regroup prev_gigs by date_time.year as gig_list %}
+
+
+<div class="tabbable"> 
+
+	<ul class="nav nav-tabs">
+		{% for year in gig_list %}
+		<li class="{% if forloop.first %}active{% endif %}"><a href="#tab{{ year.grouper }}" data-toggle="tab">{{ year.grouper }}</a></li>
+		{% endfor %}
+	</ul>
+
+	<div class="tab-content">
+		{% for year in gig_list %}
+		<div class="tab-pane {% if forloop.first %}active{% endif %}" id="tab{{ year.grouper }}">
+
+			{% for gig in year.list %}
+			<div class="container" style="width:100%">
+				<div class="span1">
+					<span class="badge badge-inverse">{{ gig.date_time|date:"d b Y" }}</span> 
+				</div>
+				<div class="span5">
+					<h4>{{ gig.hall }}</h4>
+					<p><i>{{ gig.place }}, {{ gig.city }} ({{ gig.country }})</i>
+						<br />
+						{% autoescape off %}
+						{{ gig.text }}
+						{% endautoescape %}
+					</p>
+				</div>
+			</div> 
+			<hr />
+			{% endfor %}
+
+		</div>
+		{% endfor %}
+	</div>
+
+</div>
+
+{% endif %}
+
+
+{% endblock %}

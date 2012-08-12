@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load multimedia_extras %}
+
+{% block main-content %}
+
+<div class="pagination">
+	{% for p in page.paginator.pages %}
+	{% ifequal p page %}
+	<li class="active"><a>{{ page }}</a></li>
+	{% else %}
+	<li><a href="?page={{ p.number }}">{{ p }}</a></li>
+	{% endifequal %} 
+	{% endfor %}
+</div>
+
+<ul class="thumbnails">
+	{% for artist in page.object_list %}
+	<li class="span1">
+		<a class="thumbnail" href="{% url artist-posts artist.id %}"> {% if artist.image %}<img alt="{{ artist.name }}" title="{{ artist.name }}" class="small-sticker" src="{% thumbnail artist.image 80 80 %}" />{% else %}<img src="{{ MEDIA_URL }}static/img/default_profile.jpg" width="80" alt="{{ artist.name }}" title="{{ artist.name }}" class="small-sticker"  />{% endif %}
+		</a>
+	</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,110 @@
+{% load comments i18n %}
+
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>sam - le site</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="pragma" content="no-cache">
+	<meta name="revisit-after" content="7">
+	<meta name="classification" content="Arts and Craft">
+	<meta name="description" content="le site officiel de sam, sa musique, ses concerts, son actualité">
+	<meta name="keywords" content="sam, l'avancée, l'engrenage, la grande roue, mp3, musique, libre, concert">
+	<meta name="robots" content="ALL">
+	<meta name="distribution" content="Global">
+	<meta name="rating" content="General">
+	<meta name="copyright" content="CC 2.0 FR - BY NC SA">
+	<meta name="author" content="sam">
+	<meta http-equiv="reply-to" content="samusic@free.fr">
+	<meta name="language" content="Fr">
+	<meta name="doc-type" content="Web Page">
+	<meta name="doc-rights" content="Copywritten Work">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css">
+	<link rel="alternate" type="application/rss+xml" href="http://www.sam-lesite.alwaysdata.net/feeds/latest/" title="sam - flux rss" />
+	<style>
+	body {
+		padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+	}
+	</style>
+	<link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css">
+
+	<script src="{{ STATIC_URL }}html5-boilerplate/js/libs/modernizr-2.5.3.min.js"></script>
+</head>
+<body>
+	<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+
+	<header>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a href="/" class="brand">sam</a>
+					<div class="nav-collapse">
+						<ul class="nav pull-right">
+							<li><a href="https://twitter.com/ouhouhsami" target="_blank">twitter</a></li>
+							<li><a href="http://www.facebook.com/pages/sam/53183289803?ref=nf" target="_blank" >facebook</a></li>
+							<li><a href="http://www.sam-lesite.fr/feeds/latest/" target="_blank" >rss</a></li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+	</header>
+
+	<div role="main" class="container">
+		<div class="span2">
+			<div class="well" style="padding: 8px 0;">
+				<ul class="nav nav-list">
+					<li {% ifequal context 'blog' %}class="active"{% else %}{% endifequal %}><a href="{% url blog-list %}" >Blog</a></li>
+					<li {% ifequal context 'music' %}class="active"{% else %}{% endifequal %}><a href="{% url album-list %}" >Albums</a></li>
+					<li {% ifequal context 'gig' %}class="active"{% else %}{% endifequal %}><a href="{% url gig-list %}" >Concerts</a></li>
+					<li {% ifequal context 'media' %}class="active"{% else %}{% endifequal %}><a href="{% url slideshow-list %}" >Médias</a></li>
+					<li class="divider"></li>
+					<li {% ifequal request.path '/contact/' %}class="active"{% else %}{% endifequal %}><a href="{% url contact_form %}" >Contact</a></li>
+					<li {% ifequal context 'artist' %}class="active"{% else %}{% endifequal %}><a href="{% url map %}" >Artistes</a></li>
+					<li class="divider"></li>
+					<li {% ifequal context 'link' %}class="active"{% else %}{% endifequal %}><a href="{% url link-list %}" >Liens</a></li>
+					<li {% ifequal flatpage.url '/art_libre/' %}class="active"{% else %}{% endifequal %}><a href="/art_libre/" >Art libre</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="span8">
+			{% block main-content %}
+			{% endblock %}
+		</div>
+	</div>
+	<footer class="container">
+		© 2012 - sam
+	</footer>
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+	<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript"> 
+	$(document).ready(function() {
+		$('.carousel').carousel()
+	});
+	</script>
+
+	<script>
+	var _gaq=[['_setAccount','UA-4941623-1'],['_trackPageview']];
+	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+</body>
+</html>

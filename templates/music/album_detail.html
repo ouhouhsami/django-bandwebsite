@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n multimedia_extras %}
+
+
+{% block main-content %}	
+
+
+<h2><i>{{ album.title }}</i></h2>
+<p><span class="badge badge-inverse">{{ album.date|date:"F Y" }}</span></p>
+
+
+<div class="container">
+	<div class="span3">
+		{% if album.cover %}
+		<div class="well"><img class="sticker" src="{% thumbnail album.cover 300 300 %}"  /></div>
+		{% else %}
+		<img src="{{ MEDIA_URL }}static/img/default_profile.jpg" width="300" />
+		{% endif %}	    
+	</div>
+	<div class="span5">
+		<table class="table" >
+			{% for song in songs %}
+			<tr>
+				<td >{{ song.track_number }}. </td>
+				<td>{{ song.title }}</td>
+				<td>{% if song.soundfile %}<a href="{{ song.soundfile }}" title="{{ song.title }}" ><i class="icon-download"></i> {% trans 'Télécharger' %}</a>{% endif %}</td>
+				<td>{% if song.lyrics %}<a class="soft" href="{% url music-detail song.id %}" class="text" title="Texte">Texte</a>{% endif %}</td>
+				<td>{% if song.tab %}<a class="soft" href="{{ song.tab.url }}" class="tab" title="Partition">♪ Tab.</a>{% endif %}</td>
+				{% comment %}<td>{% if song.track_set.all %}<a class="soft" href="{% url song-remix song.id %}" class="tab" title="Remix">remix</a>{% endif %}</td>{% endcomment %}
+			</tr>
+			{% endfor %}
+			
+		</table>
+		<div class="alert alert-info">	
+			Cette musique, comme l'ensemble des contenus de ce site, est sous licence libre. Elle est donc en téléchargement légal et gratuit pour toute utilisation non commerciale.
+		</div>
+	</div>
+</div>
+
+
+{% if album.albumarchive_set.all %}
+<h3>Téléchargements de l'album disponibles</h3> 
+<p>
+	{% for archive in album.albumarchive_set.all %}
+	<a class="badge" href="{{ archive.archive }}">{{ archive.title }}</a>
+	{% endfor %}
+	
+</p>
+{% endif %}
+
+
+{% autoescape off %}
+{{ album.text }}
+{% endautoescape %}
+
+
+{% endblock %}

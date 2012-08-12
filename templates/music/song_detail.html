@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block main-content %}
+
+<h2>{{ song.title }}</h2>
+<p class='subtitle'>(sur l'album <i><a href="{% url album-detail song.album.id %}">{{ song.album.title }}</a></i>)</p>
+
+{% if song.lyrics %}
+{% autoescape off %}
+{{ song.lyrics }}
+{% endautoescape %}
+{% endif %}
+
+{% if song.text %}
+<h3>Compléments</h3>
+{% autoescape off %}
+{{ song.text }}
+{% endautoescape %}
+{% endif %}
+
+{% endblock %}

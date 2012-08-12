@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load i18n multimedia_extras %}
+
+{% block rss %}
+<link rel="alternate" type="application/rss+xml" href="http://sam-lesite.alwaysdata.net/feeds/latest/" title="sam - flux rss" />
+{% endblock %}
+
+
+{% block main-content %}
+
+{% for post in object_list %}
+{% include "blog/post.html" with truncate="True" %}
+{% endfor %}
+
+<div class="pagination">
+	<ul>
+		{% for page_number in page_range %}
+		{% ifequal page page_number %}
+		<li class="active">
+			<a >{{ page_number }}</a>
+		</li>
+		{% else %}
+		<li>
+			<a href="./?page={{page_number}}" >{{ page_number }}</a>
+		</li>
+		{% endifequal %}
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}

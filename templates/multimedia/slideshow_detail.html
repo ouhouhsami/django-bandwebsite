@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load multimedia_extras i18n %}
+
+{% block main-content %}	
+	<h2 >{{ slideshow.title }}</h2>
+
+	{% autoescape off %}{{ slideshow.text }}{% endautoescape %}
+
+	{% if images %}
+	<div id="myCarousel" class="carousel slide">
+    <!-- Carousel items -->
+    <div class="carousel-inner">
+		{% for item in images %}
+		 <div class="item {% if forloop.first %}active{% endif %}">
+		 	<a href="{{ item.image.url }}" title="{{ item.title }}" >
+		 		<img src="{{ MEDIA_URL }}{{ item.image.url }}" /> 
+		 	</a>
+		 </div>
+	    {% endfor %}
+    </div>
+    <!-- Carousel nav -->
+    <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+	{% endif %}
+	
+	{% if sounds %}
+	<ul>
+	{% for item in sounds %}
+	<li>{{ item.title }}
+	<embed src="{{MEDIA_URL}}swf/mediaplayer.swf" width="200" height="20" allowscriptaccess="always" allowfullscreen="true" flashvars="width=200&height=20&file={{ item.sound }}"/>
+	 </li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	
+	{% if videos %}
+	<div class="images-box">
+	{% for item in videos %}
+	      <div style="float:left;margin:10px" class="well" >
+	      <object width="180" height="135"><param name="movie" value="{{ item.video }}?width=180&theme=none&foreground=%23F7FFFD&highlight=%23FFC300&background=%23171D1B&additionalInfos=1&hideInfos=1&autoPlay=0&start=&colors=background%3A171D1B%3Bforeground%3AF7FFFD%3Bspecial%3AFFC300%3B"></param><param name="allowFullScreen" value="true"></param><param name="allowScriptAccess" value="always"></param><embed type="application/x-shockwave-flash" src="{{ item.video }}?width=180&theme=none&foreground=%23F7FFFD&highlight=%23FFC300&background=%23171D1B&additionalInfos=1&hideInfos=1&autoPlay=0&start=&colors=background%3A171D1B%3Bforeground%3AF7FFFD%3Bspecial%3AFFC300%3B" width="180" height="135" allowfullscreen="true" allowscriptaccess="always"></embed></object>
+	      </div>
+	{% endfor %}	
+	</div> 
+    {% endif %}
+{% endblock %}
